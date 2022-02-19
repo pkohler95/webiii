@@ -9,7 +9,7 @@ export const Hero = () => {
         <div className="lg:w-1/2 flex flex-col">
           <div className="lg:w-4/5 m-auto">
             <div className="text-5xl lg:text-6xl text-center lg:text-left  font-bold pb-4 max-w-sm min-w-[302px]">
-              Unleasing the power of tokenomics
+              Unleashing the power of tokenomics
             </div>
 
             <div className="text-center lg:text-left pb-4 max-w-sm ">
