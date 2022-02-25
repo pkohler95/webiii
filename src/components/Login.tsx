@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const modalRef = useRef<HTMLInputElement>(null);
@@ -11,20 +11,20 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLodaing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      setError("");
+      setError('');
       setLodaing(true);
       await login(emailRef.current?.value, passwordRef.current?.value);
 
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch {
-      setError("Failed to create an account");
+      setError('Failed to login');
     }
     setLodaing(false);
   };
@@ -34,7 +34,7 @@ export const Login = () => {
       <div className="flex flex-col justify-between pt-5 w-11/12 m-auto">
         <div className="flex justify-start">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             className="py-2 text-3xl font-bold"
           >
             Webiii
@@ -106,7 +106,7 @@ export const Login = () => {
 
                 <div className="text-sm">
                   <div
-                    onClick={() => navigate("/reset-password")}
+                    onClick={() => navigate('/reset-password')}
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot your password?

@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Dashboard = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLodaing] = useState(false);
 
   const navigate = useNavigate();
 
   const { logOut, currentUser } = useAuth();
 
-  console.log(currentUser.email);
-
   const handleLogout = async () => {
+    console.log('Logout: ');
+    console.log(logOut);
     try {
-      setError("");
+      setError('');
       setLodaing(true);
-      console.log("Hellooo");
+      console.log('handle logout called 1');
       await logOut();
-      console.log("Hellooo2");
-      navigate("/");
-      console.log("Hellooo3");
+      console.log('handle logout called 2');
+      navigate('/');
+      console.log('handle logout called 3');
     } catch {
-      console.log("hello4");
-      setError("Failed to logout");
-      console.log("hello5");
+      console.log('handle logout called 4');
+      setError('Failed to logout');
     }
-    // setLodaing(false);
+    console.log('handle logout called 5');
+    setLodaing(false);
   };
 
   return (

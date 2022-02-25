@@ -3,62 +3,63 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { Login } from './Login';
+import { Signup } from '../components/Signup';
 import { AuthProvider } from '../contexts/AuthContext';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { ResetPassword } from './ResetPassword';
 
 describe('Happy path', () => {
   test('Render Login', async () => {
     await act(async () => {
       render(
-        <AuthProvider>
+        <AuthProvider overrideValue={{}}>
           <Router>
-            <Login />
+            <ResetPassword />
           </Router>
         </AuthProvider>
       );
     });
 
-    const element = screen.getByRole('button', { name: /login/i });
+    const element = screen.getByRole('button', { name: /send reset email/i });
 
     expect(element).toBeInTheDocument();
   });
 
-  test('When Login clicked, handle login function is fired', async () => {
-    const login = jest.fn(() => {
-      console.log('firebase login');
+  test('When "send reset email" clicked, handle reset function is fired', async () => {
+    const resetPassword = jest.fn(() => {
+      console.log('firebase sign up');
     });
 
     await act(async () => {
       render(
         <AuthProvider
           overrideValue={{
-            login,
+            resetPassword,
           }}
         >
           <Router>
-            <Login />
+            <ResetPassword />
           </Router>
         </AuthProvider>
       );
     });
 
-    const element = screen.getByRole('button', { name: /login/i });
+    const element = screen.getByRole('button', { name: /send reset email/i });
     expect(element).toBeInTheDocument();
 
     userEvent.click(element);
 
-    expect(login).toBeCalledTimes(1);
+    expect(resetPassword).toBeCalledTimes(1);
   });
 
   test('When Webiii clicked, go back to home page', async () => {
     await act(async () => {
       render(
-        <AuthProvider>
+        <AuthProvider overrideValue={{}}>
           <Router>
-            <Login />
+            <ResetPassword />
           </Router>
         </AuthProvider>
       );
@@ -68,28 +69,12 @@ describe('Happy path', () => {
     expect(element).toBeInTheDocument();
     userEvent.click(element);
   });
-
-  test('When Forgot password clicked, go back to forgot password page', async () => {
-    await act(async () => {
-      render(
-        <AuthProvider>
-          <Router>
-            <Login />
-          </Router>
-        </AuthProvider>
-      );
-    });
-
-    const element = screen.getByText(/forgot your password\?/i);
-    expect(element).toBeInTheDocument();
-    userEvent.click(element);
-  });
 });
 
 describe('Sad path', () => {
-  test('Firebase login fails, throw error', async () => {
-    const login = jest.fn(() => {
-      console.log('firebase login failed');
+  test('Firebase sign up fails, throw error', async () => {
+    const resetPassword = jest.fn(() => {
+      console.log('firebase sign up failed');
       throw new Error();
     });
 
@@ -97,20 +82,20 @@ describe('Sad path', () => {
       render(
         <AuthProvider
           overrideValue={{
-            login,
+            resetPassword,
           }}
         >
           <Router>
-            <Login />
+            <ResetPassword />
           </Router>
         </AuthProvider>
       );
     });
 
-    const element = screen.getByRole('button', { name: /login/i });
+    const element = screen.getByRole('button', { name: /send reset email/i });
     expect(element).toBeInTheDocument();
     userEvent.click(element);
 
-    expect(login).toBeCalledTimes(1);
+    expect(resetPassword).toBeCalledTimes(1);
   });
 });

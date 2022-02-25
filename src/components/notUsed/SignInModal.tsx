@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useCallback, FC, useState } from "react";
-import { useSpring, animated } from "react-spring";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useCallback, FC, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface SignInModalProps {
   showModal: boolean;
@@ -16,24 +16,24 @@ export const SignInModal: FC<SignInModalProps> = ({
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const { login } = useAuth();
+  // const { login } = useAuth();
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLodaing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      setError("");
+      setError('');
       setLodaing(true);
-      await login(emailRef.current?.value, passwordRef.current?.value);
+      // await login(emailRef.current?.value, passwordRef.current?.value);
 
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch {
-      setError("Failed to login");
+      setError('Failed to login');
     }
     setLodaing(false);
   };
@@ -54,17 +54,17 @@ export const SignInModal: FC<SignInModalProps> = ({
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Escape" && showModal) {
+      if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log("I pressed");
+        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", keyPress);
-    return () => document.removeEventListener("keydown", keyPress);
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
   return (

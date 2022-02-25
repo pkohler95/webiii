@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase/firebase-config";
+import React, { useContext, useState, useEffect, FC } from 'react';
+import { auth } from '../firebase/firebase-config';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -14,15 +14,17 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, overrideValue }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
   const signUp = (email, password) => {
+    console.log('inside signUp function');
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const login = (email, password) => {
+    console.log('inside login function');
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -36,6 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('on auth state changed');
       setCurrentUser(user);
       setLoading(false);
     });
@@ -48,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logOut,
     resetPassword,
+    ...overrideValue,
   };
 
   return (

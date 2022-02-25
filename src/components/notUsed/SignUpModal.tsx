@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useCallback, FC, useState } from "react";
-import { useSpring, animated } from "react-spring";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useCallback, FC, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface SignUpModalProps {
   showModal: boolean;
@@ -16,25 +16,25 @@ export const SignUpModal: FC<SignUpModalProps> = ({
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  const { signUp } = useAuth();
+  // const { signUp } = useAuth();
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLodaing] = useState(false);
-  const [fetchStatus, setFetchStatus] = useState("idle");
+  const [fetchStatus, setFetchStatus] = useState('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      setError("");
+      setError('');
       setLodaing(true);
-      await signUp(emailRef.current?.value, passwordRef.current?.value);
+      // await signUp(emailRef.current?.value, passwordRef.current?.value);
 
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch {
-      setError("Failed to create an account");
+      setError('Failed to create an account');
     }
     setLodaing(false);
   };
@@ -55,17 +55,17 @@ export const SignUpModal: FC<SignUpModalProps> = ({
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Escape" && showModal) {
+      if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log("I pressed");
+        console.log('I pressed');
       }
     },
     [setShowModal, showModal]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", keyPress);
-    return () => document.removeEventListener("keydown", keyPress);
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
   return (
